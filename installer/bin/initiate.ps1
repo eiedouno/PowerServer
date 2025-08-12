@@ -8,7 +8,7 @@ param(
     [string]$autokill="false"
 )
 
-# This is the installer for ToolBored.
+# This is the installer for PowerServer.
 
 if ($Path -eq "ERROR: Path not set" -or $Version -eq "ERROR: Version not set") {
     Write-Host "`n[ERROR] Path or Version not set. Please check your configuration." -ForegroundColor DarkRed

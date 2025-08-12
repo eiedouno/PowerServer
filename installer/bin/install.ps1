@@ -302,7 +302,7 @@ $global:nextButton.Add_Click({
         } elseif ($global:versionSelectDropDown.SelectedIndex -eq 2) {
             $global:Version = "smoothgui"
         }
-        $global:Path = "$($global:folderPath.Text)\ToolBored"
+        $global:Path = "$($global:folderPath.Text)\PowerServer"
         # Call the installation script here
         Start-Process -FilePath "powershell.exe" -ArgumentList @(
             "-ExecutionPolicy", "Bypass",

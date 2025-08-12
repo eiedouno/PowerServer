@@ -90,7 +90,7 @@ $buildInfo = @{
 Write-Host "[INFO] Build info saved to buildinfo.json" -ForegroundColor Blue
 
 # Delete the installer
-Remove-Item -Path ToolBored-Installer -Force -Recurse
+Remove-Item -Path PowerServer-Installer -Force -Recurse
 
 # End of installation
 Write-Host "`n[INFO] Installation completed." -ForegroundColor Blue

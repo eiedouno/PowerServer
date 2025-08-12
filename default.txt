@@ -1,0 +1,7 @@
+{
+	"Path": "D:\\.vdx\\FileHostLibrary",
+	"Port": 8080,
+	"NoLog": 0,
+	"FileUploadPolicy": "Password",
+	"Password": "0504"
+}

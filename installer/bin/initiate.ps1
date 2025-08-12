@@ -38,7 +38,7 @@ $files = @(
     "bin/update.ps1"
 )
 if ($Version -eq "stable") {
-    $uri = "https://raw.githubusercontent.com/eiedouno/ToolBored/stable/"
+    $uri = "https://raw.githubusercontent.com/eiedouno/PowerServer/main/"
 } else {
     Write-Host "`n[ERROR] Invalid version specified. Please check your configuration." -ForegroundColor DarkRed
     Pause

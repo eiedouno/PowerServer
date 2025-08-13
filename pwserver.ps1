@@ -12,15 +12,20 @@ param (
 
     [switch]$SetDefault,
     [switch]$Default,
-    [switch]$Help
+    [switch]$Help,
+    [switch]$Update
 )
+
+if ($Update) {
+    .\bin\update.ps1
+}
 
 if (($Path -eq "HELPMSG") -or ($Path -eq "/?") -or ($Help) -and -not $SetDefault -and -not ($Default)) {
     Write-Host "PowerServer v0.1`nCreated by eiedouno (https://github.com/eiedouno)`n`nCreates a webserver on LAN.
     
 PWServer[.ps1] [-Path <string>]
     [-Port <int>] [-NoLog] [-FileUploadPolicy <FileUploadPolicy>]
-    [-SetDefault] [-Default] [-Help]
+    [-SetDefault] [-Default] [-Help] [-Update]
     
 PWServer[.ps1] -Help | -? | /?
 

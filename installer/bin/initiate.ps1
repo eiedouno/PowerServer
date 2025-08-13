@@ -97,7 +97,11 @@ Write-Host "`n[INFO] Installation completed." -ForegroundColor Blue
 if ($autokill -eq "true") {
     Stop-Process -Id $PID
 } else {
-    Write-Host "[INFO] Press any key to exit." -ForegroundColor Blue
+    Write-Host "Adding PowerServer to PATH."
+    $oldPath = [Environment]::GetEnvironmentVariable("Path", "User")
+    $newPath = "$oldPath;$Path"
+    [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+    Write-Host "[INFO] Press any key to exit. Call PowerServer from the command line. (pwserver)" -ForegroundColor Blue
 }
 Pause | Out-Null
 exit 1

@@ -13,7 +13,8 @@ param (
     [switch]$SetDefault,
     [switch]$Default,
     [switch]$Help,
-    [switch]$Update
+    [switch]$Update,
+    [switch]$Troubleshoot
 )
 
 Write-Host "PowerServer v0.1`nCreated by eiedouno (https://github.com/eiedouno)"
@@ -31,12 +32,12 @@ if ($Update) {
     }
 }
 
-if (($Path -eq "HELPMSG") -or ($Path -eq "/?") -or ($Help) -and -not $SetDefault -and -not ($Default)) {
+if (($Path -eq "HELPMSG") -or ($Path -eq "/?") -or ($Help) -and -not $SetDefault -and -not $Default -and -not $Troubleshoot) {
     Write-Host "`n`nCreates a webserver on LAN.
     
 PWServer[.ps1] [-Path <string>]
     [-Port <int>] [-NoLog] [-FileUploadPolicy <FileUploadPolicy>]
-    [-SetDefault] [-Default] [-Help] [-Update]
+    [-SetDefault] [-Default] [-Update] [-Help] [-Troubleshoot]
     
 PWServer[.ps1] -Help | -? | /?
 
@@ -73,6 +74,14 @@ EXAMPLES
     PWServer.ps1 -Path C:\ -Port 8080 -FileUploadPolicy Allow
     PWServer -P C:\ -Pt 8080 -NoLog -FileUploadPolicy Deny
     PWServer C:\ 8080 Allow`n"
+    exit
+}
+
+if ($Troubleshoot) {
+    Write-Host "`n Most common problems:
+    
+    Network hosting / Firewall blocked.
+        Open Settings (Win + I) and navigate to Network and Internet > Wifi (or ethernet if you have it). Click on your Wifi Network's properties and change the Network Profile Type to Private Network."
     exit
 }
 

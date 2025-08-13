@@ -112,7 +112,7 @@ while ($true) {
             
             try {
                 $fs = [System.IO.File]::Create($uploadPath)
-                $buffer = New-Object byte[] 8192
+                $buffer = New-Object byte[] (1MB)
                 while (($read = $request.InputStream.Read($buffer, 0, $buffer.Length)) -gt 0) {
                     $fs.Write($buffer, 0, $read)
                 }

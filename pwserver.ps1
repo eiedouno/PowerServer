@@ -16,17 +16,23 @@ param (
     [switch]$Update
 )
 
+Write-Host "PowerServer v0.1`nCreated by eiedouno (https://github.com/eiedouno)"
+Start-Sleep -Seconds 1
+
 if ($Update) {
     try {
+        Write-Host "Updating PowerServer..." -ForegroundColor Blue
         powershell $PSSCriptRoot\bin\update.ps1
-        Write-Host "`nUpdated PowerServer.`n"
+        Write-Host "`nUpdated PowerServer.`n" -ForegroundColor Green
+        exit
     } catch {
         Write-Host "Update Failed: $_" -ForegroundColor DarkRed
+        exit
     }
 }
 
 if (($Path -eq "HELPMSG") -or ($Path -eq "/?") -or ($Help) -and -not $SetDefault -and -not ($Default)) {
-    Write-Host "PowerServer v0.1`nCreated by eiedouno (https://github.com/eiedouno)`n`nCreates a webserver on LAN.
+    Write-Host "`n`nCreates a webserver on LAN.
     
 PWServer[.ps1] [-Path <string>]
     [-Port <int>] [-NoLog] [-FileUploadPolicy <FileUploadPolicy>]

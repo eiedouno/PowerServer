@@ -17,7 +17,7 @@ param (
 )
 
 if ($Update) {
-    .\bin\update.ps1
+    . .\bin\update.ps1
 }
 
 if (($Path -eq "HELPMSG") -or ($Path -eq "/?") -or ($Help) -and -not $SetDefault -and -not ($Default)) {

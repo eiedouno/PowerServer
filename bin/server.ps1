@@ -215,7 +215,7 @@ while ($true) {
             }
 
             $html += "</ul>"
-
+            
             if ($FileUploadPolicy -eq "Allow" -or $FileUploadPolicy -eq "Password") {
                 $html += @"
 <form method='POST' enctype='text/plain' id='uploadForm'>
@@ -223,13 +223,13 @@ while ($true) {
     <input type='file' id='fileInput' />
     <button type='button' onclick='promptUploadPassword()'>Upload</button>
 </form>
-
+            
 <form method='POST' enctype='text/plain' id='folderForm' onsubmit='return promptFolderPassword();'>
     <p>Create new folder:</p>
     <input type='text' id='newFolderName' required />
     <button type='submit'>Create Folder</button>
 </form>
-
+            
 <script>
 function promptUploadPassword() {
     var file = document.getElementById('fileInput').files[0];
@@ -237,6 +237,8 @@ function promptUploadPassword() {
         alert('Select a file to upload.');
         return;
     }
+            
+    var headers = { 'X-Filename': file.name };
 "@
                 if ($FileUploadPolicy -eq "Password") {
                     $html += @"
@@ -245,37 +247,26 @@ function promptUploadPassword() {
         alert('Upload cancelled. Password required.');
         return;
     }
+    headers['X-Upload-Password'] = pw;
 "@
                 }
                 $html += @"
-    var reader = new FileReader();
-    reader.onload = function(e) {
-        var headers = { 'X-Filename': file.name };
-"@
-                if ($FileUploadPolicy -eq "Password") {
-                    $html += @"
-        headers['X-Upload-Password'] = pw;
-"@
-                }
-                $html += @"
-        fetch(window.location.href, {
-            method: 'POST',
-            headers: headers,
-            body: e.target.result
-        }).then(response => {
-            if (response.ok) {
-                alert('Upload successful.');
-                location.reload();
-            } else if (response.status === 403) {
-                alert('Invalid password.');
-            } else {
-                alert('Upload failed.');
-            }
-        });
-    };
-    reader.readAsArrayBuffer(file);
+    fetch(window.location.href, {
+        method: 'POST',
+        headers: headers,
+        body: file
+    }).then(response => {
+        if (response.ok) {
+            alert('Upload successful.');
+            location.reload();
+        } else if (response.status === 403) {
+            alert('Invalid password.');
+        } else {
+            alert('Upload failed.');
+        }
+    });
 }
-
+            
 function promptFolderPassword() {
     var folderName = document.getElementById('newFolderName').value;
     if (!folderName) {
@@ -290,27 +281,24 @@ function promptFolderPassword() {
         alert('Folder creation cancelled. Password required.');
         return false;
     }
+    var headers = { 'X-New-Folder': folderName, 'X-Upload-Password': pw };
 "@
-                }
-                $html += @"
+                } else {
+                    $html += @"
     var headers = { 'X-New-Folder': folderName };
 "@
-                if ($FileUploadPolicy -eq "Password") {
-                    $html += @"
-    headers['X-Upload-Password'] = pw;
-"@
                 }
                 $html += @"
-    fetch(window.location.href, {
-        method: 'POST',
-        headers: headers
-    }).then(response => {
-        if (response.status === 200) {
-            alert('Folder created successfully');
-            location.reload();
-        } else if (response.status === 409) {
-            alert('Folder already exists');
-        } else if (response.status === 403) {
+        fetch(window.location.href, {
+            method: 'POST',
+            headers: headers
+        }).then(response => {
+            if (response.status === 200) {
+                alert('Folder created successfully');
+                location.reload();
+            } else if (response.status === 409) {
+                alert('Folder already exists');
+            } else if (response.status === 403) {
             alert('Invalid password');
         } else {
             alert('Failed to create folder');
@@ -318,7 +306,7 @@ function promptFolderPassword() {
     });
     return false;
 }
-
+            
 function downloadFolder(folderPath) {
     var basePath = (location.pathname === '/' ? '' : location.pathname);
     window.location.href = basePath + folderPath + '?zip=1';
@@ -326,6 +314,7 @@ function downloadFolder(folderPath) {
 </script>
 "@
             }
+
 
             $html += "</body></html>"
 

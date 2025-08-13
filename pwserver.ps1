@@ -17,7 +17,12 @@ param (
 )
 
 if ($Update) {
-    powershell $PSSCriptRoot\bin\update.ps1
+    try {
+        powershell $PSSCriptRoot\bin\update.ps1
+        Write-Host "`nUpdated PowerServer.`n"
+    } catch {
+        Write-Host "Update Failed: $_" -ForegroundColor DarkRed
+    }
 }
 
 if (($Path -eq "HELPMSG") -or ($Path -eq "/?") -or ($Help) -and -not $SetDefault -and -not ($Default)) {

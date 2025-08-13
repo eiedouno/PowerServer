@@ -97,10 +97,15 @@ Write-Host "`n[INFO] Installation completed." -ForegroundColor Blue
 if ($autokill -eq "true") {
     Stop-Process -Id $PID
 } else {
-    Write-Host "Adding PowerServer to PATH."
+    Write-Host "Adding PowerServer to PATH." -ForegroundColor Blue
     $oldPath = [Environment]::GetEnvironmentVariable("Path", "User")
-    $newPath = "$oldPath;$Path"
-    [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+    if ($oldPath -notlike "*$Path*") {
+        $newPath = "$oldPath;$Path"
+        [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+        Write-Host "[INFO] PowerServer path added to PATH." -ForegroundColor Blue
+    } else {
+        Write-Host "[INFO] PowerServer path already exists in PATH." -ForegroundColor Blue
+    }
     Write-Host "[INFO] Press any key to exit. Call PowerServer from the command line. (pwserver)" -ForegroundColor Blue
 }
 Pause | Out-Null

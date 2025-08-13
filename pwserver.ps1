@@ -22,7 +22,7 @@ Start-Sleep -Seconds 1
 if ($Update) {
     try {
         Write-Host "Updating PowerServer..." -ForegroundColor Blue
-        & "$PSScriptRoot\bin\update.ps1"
+        & "$PSScriptRoot\bin\update.ps1" -Wait
         Write-Host "`nUpdated PowerServer.`n" -ForegroundColor Green
         exit
     } catch {

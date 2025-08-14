@@ -18,7 +18,7 @@ param (
 )
 
 Write-Host "`nPowerServer v0.1`nCreated by eiedouno (https://github.com/eiedouno)"
-Start-Sleep -Seconds 1
+Start-Sleep -Milliseconds 400
 
 if ($Update) {
     try {

@@ -18,6 +18,10 @@ Start-Sleep -Seconds 1
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://*:$Port/")
 $listener.Start()
+$listener.TimeoutManager.IdleConnection = [TimeSpan]::FromMinutes(30)
+$listener.TimeoutManager.RequestQueue = [TimeSpan]::FromMinutes(30)
+$listener.TimeoutManager.RequestIdle = [TimeSpan]::FromMinutes(30)
+
 
 Write-Host "Arguments Passed: $Path, $Port, $NoLog, $FileUploadPolicy"
 Start-Sleep -Milliseconds 1
